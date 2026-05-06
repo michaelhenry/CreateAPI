@@ -94,9 +94,10 @@ final class Templates {
         }
     }
 
-    func enumOfStrings(name: TypeName, contents: String) -> String {
+    func enumOfStrings(name: TypeName, contents: String, protocols: Protocols) -> String {
+        let conformances = (["String"] + protocols.sorted()).joined(separator: ", ")
         return """
-        \(access)enum \(name): String, Codable, CaseIterable {
+        \(access)enum \(name): \(conformances) {
         \(contents.indented)
         }
         """
