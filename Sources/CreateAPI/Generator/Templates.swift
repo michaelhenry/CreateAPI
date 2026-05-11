@@ -637,8 +637,11 @@ final class Templates {
     }
 
     var anyJSON: String {
-        """
-        \(access)enum AnyJSON: Equatable, Codable {
+        var protocols = Protocols(options.entities.protocols)
+        protocols.insert("Equatable")
+        let conformances = protocols.sorted().joined(separator: ", ")
+        return """
+        \(access)enum AnyJSON: \(conformances) {
             case string(String)
             case number(Double)
             case object([String: AnyJSON])
